@@ -2,6 +2,9 @@
 
 namespace PurchasesTask
 {
+    /// <summary>
+    /// Named constants that represents type of purchases
+    /// </summary>
     public enum TypeOfPurchase
     {
         CasualPurchase,
@@ -9,62 +12,59 @@ namespace PurchasesTask
         PurchaseWithTransportCost,
         PurchaseWithBonus
     };
-    abstract class Purchase : IComparable<Purchase>
+    /// <summary>
+    /// Abstract purchase class
+    /// </summary>
+     public abstract class Purchase : IComparable<Purchase>
     {
-
+        /// <summary>
+        /// Nessesary purchase date
+        /// </summary>
+        private const Int32 PurchaseDate = 10;
+        /// <summary>
+        /// Purchase type property
+        /// </summary>
         public TypeOfPurchase Type { get; protected set; }
+         /// <summary>
+         /// Purchase price property
+         /// </summary>
         public Decimal Price { get; protected set; }
+         /// <summary>
+         /// Purchase date property
+         /// </summary>
         public DateTime Date { get; private set; }
+         /// <summary>
+         /// Quantity of purchases property
+         /// </summary>
         public UInt32 Quantity { get; private set; }
-        public Boolean TenDayBought { get; private set; }
-
+         /// <summary>
+         /// Wether bought in purchase day property
+         /// </summary>
+        public Boolean BoughtInPurchaseDate { get { return Date.Day == PurchaseDate; } }
+         /// <summary>
+         /// Abstract purchase class constructor
+         /// </summary>
+         /// <param name="date">Date of purchase</param>
+         /// <param name="quantity">Quantity of purchase</param>
         protected Purchase(DateTime date, UInt32 quantity)
         {
-            TenDayBought = IsBoughtATenDay(date);
             Quantity = quantity;
             Date = date;
         }
-
+         /// <summary>
+         /// Abstract method of price calculation
+         /// </summary>
+         /// <param name="price">Price of purchase</param>
+         /// <returns>Result purchase price</returns>
         protected abstract Decimal PriceIs(Decimal price);
-
-        private static Boolean IsBoughtATenDay(DateTime date)
-        {
-            return date.Day == 10;
-        }
-
+         /// <summary>
+         /// Explicit interface member implementation
+         /// </summary>
+         /// <param name="comparePart">Purchase</param>
+         /// <returns>Position in the sort order</returns>
         public int CompareTo(Purchase comparePart)
         {
             return Date.Day.CompareTo(comparePart.Date.Day);
-        }
-
-        public override string ToString()
-        {
-            Console.WriteLine(new string('-', 95));
-            return "|" + AlignCentre(Type.ToString(), 28) + "|"
-                   + AlignCentre(Date.ToShortDateString(), 16) + "|"
-                   + AlignCentre(Price.ToString(), 13) + "|"
-                   + AlignCentre(Quantity.ToString(), 10) + "|"
-                   + AlignCentre(TenDayBought.ToString(), 22) + "|";
-        }
-
-        static public String Head()
-        {
-            Console.SetWindowSize(100,40);
-            Console.WriteLine(new string('-', 95));
-            return "|" + AlignCentre("Type of Purchase", 28) + "|"
-                   + AlignCentre("Date of purchase", 16) + "|"
-                   + AlignCentre("Price, rub.", 13) + "|"
-                   + AlignCentre("Quantity", 10) + "|"
-                   + AlignCentre("Wether get in 10 day", 22) + "|";
-        }
-
-        static public String Tail()
-        {
-            return new string('-', 95)+"\n";
-        }
-        static private string AlignCentre(string text, int width)
-        {
-            return text.PadRight(width - (width - text.Length) / 2).PadLeft(width);
         }
     }
 }

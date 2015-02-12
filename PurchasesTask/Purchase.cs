@@ -56,7 +56,7 @@ namespace PurchasesTask
          /// </summary>
          /// <param name="price">Price of purchase</param>
          /// <returns>Result purchase price</returns>
-        protected abstract Decimal PriceIs(Decimal price);
+        protected abstract Decimal PriceIs(Decimal price);//из название не понятно, что делает метод
          /// <summary>
          /// Explicit interface member implementation
          /// </summary>

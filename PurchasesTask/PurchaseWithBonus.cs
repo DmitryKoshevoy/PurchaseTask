@@ -22,7 +22,7 @@ namespace PurchasesTask
             : base(date, quantity)
         {
             _bonusProdPrice = bonusProdPrice;
-            Price = PriceIs(price);
+            Price = PriceIs(price);// нужно перенести в базовый класс
             Type = TypeOfPurchase.PurchaseWithBonus;
         }
         /// <summary>
